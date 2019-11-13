@@ -1,0 +1,332 @@
+body {
+  margin: 0px;
+}
+
+.greate-container{
+  height: 800px;
+}
+
+.header {
+  width: 100%;
+  height: 150px;
+  background: #483D8B;
+  margin: 0 px;
+}
+
+.styleButtonAdd {
+  float: left;
+  width: 210px;
+  height: 52px;
+  margin-left: 50px;
+  margin-top: 35px;
+  background: white;
+  color: #483D8B;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 25px;
+
+}
+
+.task-item {
+  margin-left: 55px;
+  margin-right: 75px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 40px;
+  border: 1px solid white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px silver;
+  color: #483D8B;
+}
+
+.danger-them {
+  background-color: #DC143C;
+  color: #FFFFFF;
+}
+
+
+.task-item .item-date {
+  margin-left: 200px;
+  width: 40px;
+  margin-top: 7px;
+  font-size: 15px;
+}
+
+.task-item .item-text {
+  display: inline-block;
+  margin-left: 100px;
+  width: 400px;
+  max-width: 400px;
+  margin-top: 6px;
+  overflow: hidden;
+  font-weight: bold;
+}
+.item-text:hover{
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.task-item .item-rating {
+  display: inline-block;
+  margin-left: 250px;
+  width: 23px;
+  margin-top: 7px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.task-item .item-user {
+  display: inline-block;
+  margin-left: 170px;
+  width: 150px;
+  max-width: 150px;
+  overflow: hidden;
+  margin-top: 7px;
+  font-size: 18px;
+}
+
+.item-user:hover{
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.task-item .item-numb {
+  display: inline-block;
+  width: 80px;
+  margin-left: 4px;
+  margin-top: 7px;
+  font-size: 18px;
+}
+
+.search-data {
+  float: left;
+  color: white;
+  margin-left: 50px;
+  margin-top: 28px;
+}
+
+/*nav input search */
+
+.img-search{
+  display: inline-block;
+  margin-top: 1px;
+  float: left;
+  width: 50px;
+  height: 43px;
+  padding-left: 7px;
+  padding-top: 5px;
+  background: white;
+  border-right: none;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+.block-search{
+  float: left;
+  margin-left: 90px;
+  margin-top: 40px;
+}
+
+.styleInputSearch {
+  width: 220px;
+  height: 43px;
+  margin-bottom: 10px;
+  background: white;
+  color: #483D8B ;
+  font-size: 15px;
+  border-left: none;
+  border-top-right-radius:25px;
+  border-bottom-right-radius: 25px;
+
+}
+
+.block-user {
+  float: left;
+  margin-top: 40px;
+}
+
+.labelUser {
+  margin-left: 90px;
+  margin-right: 10px;
+  color: white;
+}
+
+.selectUser {
+  width: 190px;
+  height: 43px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+
+.styleInputDate {
+  margin-top: 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  width: 50px;
+  height: 35px;
+}
+
+.container-tasks-and-button{
+  height: 700px;
+  max-height: 700px;
+}
+
+.content-tasks {
+  height: 550px;
+  max-height: 550px;
+  overflow: auto;
+}
+
+.delete-task{
+  position: absolute;
+  z-index: 1;
+  margin-left: 1455px;
+}
+
+/* Form Task */
+
+.task-form {
+  margin-left: 150px;
+}
+
+.font-ad {
+  margin-bottom: 50px;
+  color: #483D8B;
+  font-weight: bold;
+}
+
+.styleInputsTask {
+  float: left;
+  margin: 5px;
+  font-size: 20px;
+}
+
+.red-star{
+  color: red;
+}
+
+/* input type number */
+.not-arrow {
+  -moz-appearance: textfield;
+}
+.not-arrow::-webkit-inner-spin-button {
+  display: none;
+}
+
+/* inputs form */
+
+.style-input{
+  height: 35px;
+  width: 150px;
+  border: 1px solid #483D8B;
+  border-radius: 5px;
+  margin-left: 85px;
+}
+
+.input-data{
+  margin-left: 74px;
+}
+
+.input-user{
+  margin-left: 36px;
+  margin-bottom: 35px;
+}
+
+.input-text{
+  height: 250px;
+  width: 600px;
+  max-height: 250px;
+  margin-left: 40px;
+}
+
+.input-rating{
+  height: 35px;
+  width: 70px;
+  margin-left: 24px;
+  border: 1px solid #483D8B;
+  border-radius: 4px;
+}
+
+.item-check{
+  display: inline;
+}
+
+.button-delete {
+  width: 160px;
+  height: 40px;
+  border-radius: 20px;
+  background:  #483D8B;
+  color: white ;
+  font-size: 22px;
+}
+
+.btn-save{
+  width: 160px;
+  height: 40px;
+  margin-left: 600px;
+  border: 1px solid #483D8B;
+  border-radius: 20px;
+  background:  white;
+  color:#483D8B ;
+  font-size: 22px;
+}
+
+.btn-cancellation{
+  width: 160px;
+  height: 40px;
+  margin-left: 8px;
+  border: 1px solid #483D8B;
+  border-radius: 20px;
+  background:  white;
+  color:#483D8B ;
+  font-size: 22px;
+}
+
+.eror-form{
+  width: 550px;
+}
+/* footer */
+
+.btn-quantity {
+  width: 50px;
+  height: 35px;
+  background: white;
+  margin-left: 10px;
+  color: #483D8B;
+  border: 1px #483D8B solid;
+  border-radius: 5px;
+}
+
+.quantity-click {
+background: #483D8B;
+color: white;
+}
+
+
+.btn-channel {
+  border-radius: 40px;
+  margin-left: 17px;
+  width: 35px;
+  height: 35px;
+  color: #483D8B;
+  font-size: 20px;
+}
+
+.channel-click {
+background: #483D8B;
+color: white;
+}
+
+.buttons-quantity {
+  float: left;
+  margin-left: 50px;
+  color: #483D8B;
+}
+.buttons-channels {
+  float: left;
+  margin-left: 850px;
+  color: #483D8B;
+}
