@@ -37,3 +37,11 @@ export const addFilterText = createAction('ADD_FILTER_TEXT');
 export const addFilterDateBefore = createAction('ADD_FILTER_DATE_BEFORE');
 
 export const addFilterDateAfter = createAction('ADD_FILTER_DATE_AFTER');
+
+// add alert for list
+
+export const addAlert = createAction('ADD_ALERT');
+
+export const removeAlert = createAction('REMOVE_ALERT');
+
+export const removeAllList = createAction('REMOVE_LIST_ALERTS');

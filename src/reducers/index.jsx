@@ -6,6 +6,15 @@ const users = createReducer([], {
   [actions.addUser]: (state, action) => ([...state, action.payload.user]),
 });
 
+const listAlerts = createReducer([], {
+  [actions.addAlert]: (state, action) => ([...state, action.payload.alert]),
+  [actions.removeAlert]: (state, action) => {
+    const { id } = action.payload;
+    return state.filter((alert) => alert.id !== id);
+  },
+  [actions.removeAllList]: () => [],
+});
+
 const filters = createReducer({
   user: '',
   date: { before: '', after: '' },
@@ -81,6 +90,7 @@ const tasks = createReducer({ allTasks: [], idTasksToRemove: [] }, {
   [actions.resetTasks]: (state) => {
     const { allTasks, idTasksToRemove } = state;
     return {
+      ...state,
       allTasks: allTasks.filter((task) => !idTasksToRemove.includes(task.id)),
       idTasksToRemove: [],
     };
@@ -114,4 +124,5 @@ export default combineReducers({
   contentTask,
   dataChannel,
   filters,
+  listAlerts,
 });

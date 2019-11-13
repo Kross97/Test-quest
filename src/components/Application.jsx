@@ -6,10 +6,15 @@ import * as actions from '../actions';
 import ModalAddUser from './Modal_Add_User';
 import ContentTasks from './Content';
 import FooterButtons from './Footer_buttons';
+import NavigationSort from './Navigation_For_Sorting';
 
 const mapProps = ({ users, filters }) => {
   const { before, after } = filters.date;
-  return { users, before, after };
+  return {
+    users,
+    before,
+    after,
+  };
 };
 
 const allActions = {
@@ -66,7 +71,11 @@ changeFilterText = (e) => {
 /* eslint class-methods-use-this: ["error", {
 "exceptMethods": ["homepage"] }] */
 homepage() {
-  const { users, before, after } = this.props;
+  const {
+    users,
+    before,
+    after,
+  } = this.props;
   const { textSearch } = this.state;
   return (
     <div className="greate-container">
@@ -105,6 +114,7 @@ homepage() {
             <input onChange={this.changeTextSearch} className="styleInputSearch" type="name" value={textSearch} placeholder="поиск по тексту" />
           </div>
         </form>
+        <NavigationSort />
       </div>
       <ContentTasks />
       <FooterButtons />

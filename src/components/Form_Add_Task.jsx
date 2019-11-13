@@ -32,6 +32,7 @@ const allActions = {
   updateText: actions.updateText,
   updateRating: actions.updateRating,
   resetContent: actions.resetContent,
+  addAlert: actions.addAlert,
 };
 
 class FormAddTask extends React.Component {
@@ -57,6 +58,7 @@ submitTask = (e) => {
     user,
     text,
     rating,
+    addAlert,
   } = this.props;
   if (number === '0' || valid.isEmpty(date) || valid.isEmpty(user)
   || user === 'Все' || valid.isEmpty(text) || !valid.isInt(rating) || !valid.isInt(number)) {
@@ -72,6 +74,8 @@ submitTask = (e) => {
       rating,
     };
     addTask({ task });
+    const alert = { id: _.uniqueId(), type: 'add_task', message: 'Задача успешно создана!' };
+    addAlert({ alert });
     resetContent();
     this.setState({ notValid: false });
     closeForm();

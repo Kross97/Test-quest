@@ -31,10 +31,11 @@ body {
   margin-left: 55px;
   margin-right: 75px;
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   padding-left: 15px;
   padding-right: 15px;
-  height: 40px;
+  padding-bottom: 7px;
+  height: 44px;
   border: 1px solid white;
   border-radius: 10px;
   box-shadow: 1px 1px 2px 2px silver;
@@ -48,20 +49,21 @@ body {
 
 
 .task-item .item-date {
+ display: inline-block;
   margin-left: 200px;
-  width: 40px;
-  margin-top: 7px;
-  font-size: 15px;
+  height: 25px;
+  font-size: 21px;
 }
 
 .task-item .item-text {
   display: inline-block;
-  margin-left: 100px;
+  margin-left: 230px;
   width: 400px;
+  height: 31px;
   max-width: 400px;
-  margin-top: 6px;
   overflow: hidden;
   font-weight: bold;
+  font-size: 21px;
 }
 .item-text:hover{
   overflow: auto;
@@ -70,21 +72,21 @@ body {
 
 .task-item .item-rating {
   display: inline-block;
-  margin-left: 250px;
+  margin-left: 150px;
   width: 23px;
-  margin-top: 7px;
-  font-size: 20px;
+  height: 32px;
+  font-size: 26px;
   font-weight: bold;
 }
 
 .task-item .item-user {
   display: inline-block;
-  margin-left: 170px;
+  margin-left: 120px;
   width: 150px;
+  height: 32px;
   max-width: 150px;
   overflow: hidden;
-  margin-top: 7px;
-  font-size: 18px;
+  font-size: 23px;
 }
 
 .item-user:hover{
@@ -95,9 +97,9 @@ body {
 .task-item .item-numb {
   display: inline-block;
   width: 80px;
+  height: 25px;
   margin-left: 4px;
-  margin-top: 7px;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .search-data {
@@ -175,15 +177,65 @@ body {
 }
 
 .content-tasks {
-  height: 550px;
-  max-height: 550px;
+  height: 650px;
+  max-height: 650px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.content-tasks:hover{
   overflow: auto;
+  scrollbar-width: none;
 }
 
 .delete-task{
-  position: absolute;
-  z-index: 1;
-  margin-left: 1455px;
+  margin-top: 655px;
+  margin-left: 1405px;
+}
+/* spans sorting*/
+
+.sort-label {
+  display: inline-block;
+  color: white;
+  width: 100px;
+  height: 55px;
+  margin-right: 85px;
+}
+
+.sort-block{
+  margin-top: 10px;
+  margin-left: 112px;
+}
+
+.sort-block-rating{
+  margin-top: 10px;
+  margin-left: 147px;
+}
+
+.sort-rating{
+  display: inline-block;
+  color: white;
+  width: 50px;
+  height: 55px;
+  margin-right: 81px;
+}
+
+.sort-block-number{
+  margin-top: 10px;
+  margin-left: 55px;
+}
+
+.sort-block-user{
+  margin-top: 10px;
+  margin-left: 35px;
+}
+
+.sort-text{
+  display: inline-block;
+  color: white;
+  width: 100px;
+  height: 55px;
+  margin-right: 220px;
 }
 
 /* Form Task */
@@ -327,6 +379,32 @@ color: white;
 }
 .buttons-channels {
   float: left;
-  margin-left: 850px;
+  margin-left: 791px;
   color: #483D8B;
+}
+
+/* list alerts*/
+
+.list-alerts{
+  display: inline-block;
+  height: 460px;
+  max-height: 460px;
+  overflow: hidden;
+  width: 340px;
+  margin-top: 12px;
+  margin-left: 60%;
+  position: absolute;
+  z-index: 2;
+  margin-bottom: 50%;
+}
+
+.list-alerts:hover{
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.item-alert{
+  opacity: 0.8;
+  height: 75px;
+  width: 340px;
 }

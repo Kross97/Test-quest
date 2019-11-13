@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap';
 import React from 'react';
 import valid from 'validator';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
@@ -19,6 +20,7 @@ const mapProps = ({ users }) => ({ users });
 
 const allActions = {
   addUser: actions.addUser,
+  addAlert: actions.addAlert,
 };
 
 class ModalAddUser extends React.Component {
@@ -29,7 +31,7 @@ class ModalAddUser extends React.Component {
 
 submitUser = (e) => {
   e.preventDefault();
-  const { addUser, handleClose } = this.props;
+  const { addUser, addAlert, handleClose } = this.props;
   const { name, lastName } = this.state;
   if (valid.isEmpty(name) || valid.isEmpty(lastName)
  || valid.isInt(name) || valid.isInt(lastName)) {
@@ -37,6 +39,8 @@ submitUser = (e) => {
   } else {
     const user = { fullName: `${name}.${lastName[0]}` };
     addUser({ user });
+    const alert = { id: _.uniqueId(), type: 'user', message: 'Пользователь успешно добавлен!' };
+    addAlert({ alert });
     this.setState({ name: '', lastName: '', notValid: false });
     handleClose();
   }

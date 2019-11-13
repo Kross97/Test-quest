@@ -1,7 +1,9 @@
 import React from 'react';
 import cn from 'classnames';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import ListAlerts from './List_Alerts';
 
 const ButtonDelete = (props) => {
   const { deleteTasks } = props;
@@ -9,8 +11,14 @@ const ButtonDelete = (props) => {
 };
 
 
-const mapProps = ({ tasks, dataChannel, filters }) => {
+const mapProps = ({
+  tasks,
+  dataChannel,
+  filters,
+  listAlerts,
+}) => {
   const props = {
+    listAlerts,
     tasks: tasks.allTasks,
     idTasksToRemove: tasks.idTasksToRemove,
     channelId: dataChannel.currentId,
@@ -27,29 +35,29 @@ const allActions = {
   resetTasks: actions.resetTasks,
   addIdTaskForRemove: actions.addIdTaskForRemove,
   deleteIDTaskForRemove: actions.deleteIDTaskForRemove,
+  addAlert: actions.addAlert,
 };
 
 class ContentTasks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { showButton: false };
-  }
-
 showResetButton = (id) => (e) => {
   e.preventDefault();
-  const { addIdTaskForRemove, deleteIDTaskForRemove, idTasksToRemove } = this.props;
+  const {
+    addIdTaskForRemove,
+    deleteIDTaskForRemove,
+    idTasksToRemove,
+  } = this.props;
   if (idTasksToRemove.includes(id)) {
     deleteIDTaskForRemove({ id });
   } else {
     addIdTaskForRemove({ id });
   }
-  this.setState({ showButton: true });
 }
 
 resetChekedTasks = () => {
-  const { resetTasks } = this.props;
+  const { resetTasks, addAlert } = this.props;
   resetTasks();
-  this.setState({ showButton: false });
+  const alert = { id: _.uniqueId(), type: 'remove_task', message: 'Отмеченные задачи успешно удаленны!' };
+  addAlert({ alert });
 }
 
 /* eslint class-methods-use-this: ["error", {
@@ -61,9 +69,7 @@ filtering(tasks) {
     filterDateBefore,
     filterDateAfter,
   } = this.props;
-  console.log('TEXT-FILTER', filterText);
-  console.log('USER-FILTER', filterUser);
-  console.log('DATE-FILTER', filterDateBefore, filterDateAfter);
+
   let filteringTasks = tasks;
   if (filterUser !== 'Все') {
     filteringTasks = filteringTasks.filter((task) => task.user === filterUser);
@@ -91,7 +97,13 @@ renderTasks() {
     quantityTasks,
     idTasksToRemove,
   } = this.props;
+
   const tasksBeforeFilters = this.filtering(tasks);
+
+  if (tasksBeforeFilters.length === 0) {
+    return null;
+  }
+
   const currentChannelTasks = tasksBeforeFilters.filter((task) => task.channelId === channelId);
   return (
     <div className="content-tasks container-fluid">
@@ -116,12 +128,16 @@ renderTasks() {
 }
 
 render() {
-  const { tasks } = this.props;
-  const { showButton } = this.state;
+  const {
+    tasks,
+    listAlerts,
+    idTasksToRemove,
+  } = this.props;
   return (
     <div className="container-tasks-and-button">
       {tasks.length !== 0 && this.renderTasks()}
-      { showButton && <ButtonDelete deleteTasks={this.resetChekedTasks} /> }
+      {listAlerts.length !== 0 && <ListAlerts />}
+      { idTasksToRemove.length !== 0 && <ButtonDelete deleteTasks={this.resetChekedTasks} /> }
     </div>
   );
 }
