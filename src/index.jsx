@@ -35,7 +35,6 @@ const store = configureStore({
     typeSort: '',
   },
 });
-
 ReactDOM.render(
   <Provider store={store}>
     <Application />

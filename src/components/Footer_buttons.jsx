@@ -68,5 +68,4 @@ render() {
   );
 }
 }
-
 export default connect(mapProps, allActions)(FooterButtons);
