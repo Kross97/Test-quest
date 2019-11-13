@@ -6,6 +6,10 @@ const users = createReducer([], {
   [actions.addUser]: (state, action) => ([...state, action.payload.user]),
 });
 
+const typeSort = createReducer('', {
+  [actions.addTypeSort]: (state, action) => action.payload.type,
+});
+
 const listAlerts = createReducer([], {
   [actions.addAlert]: (state, action) => ([...state, action.payload.alert]),
   [actions.removeAlert]: (state, action) => {
@@ -124,5 +128,6 @@ export default combineReducers({
   contentTask,
   dataChannel,
   filters,
+  typeSort,
   listAlerts,
 });

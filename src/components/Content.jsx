@@ -16,9 +16,11 @@ const mapProps = ({
   dataChannel,
   filters,
   listAlerts,
+  typeSort,
 }) => {
   const props = {
     listAlerts,
+    typeSort,
     tasks: tasks.allTasks,
     idTasksToRemove: tasks.idTasksToRemove,
     channelId: dataChannel.currentId,
@@ -61,7 +63,31 @@ resetChekedTasks = () => {
 }
 
 /* eslint class-methods-use-this: ["error", {
-"exceptMethods": ["filtering"] }] */
+"exceptMethods": ["filtering","sorting"] }] */
+sorting(tasksAfterFilters) {
+  const { typeSort } = this.props;
+  if (typeSort === '') {
+    return tasksAfterFilters;
+  }
+
+  const newSliceTasks = tasksAfterFilters.slice(0);
+
+  const allTypesSorting = {
+    number: (tasks) => tasks.sort((a, b) => Number(a.number) - Number(b.number)),
+    number2: (tasks) => tasks.sort((a, b) => Number(b.number) - Number(a.number)),
+    data: (tasks) => tasks.sort((a, b) => Date.parse(a.date) - Date.parse(b.date)),
+    data2: (tasks) => tasks.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)),
+    text: (tasks) => tasks.sort((a, b) => a.text > b.text),
+    text2: (tasks) => tasks.sort((a, b) => a.text < b.text),
+    rating: (tasks) => tasks.sort((a, b) => Number(a.rating) - Number(b.rating)),
+    rating2: (tasks) => tasks.sort((a, b) => Number(b.rating) - Number(a.rating)),
+    user: (tasks) => tasks.sort((a, b) => a.user > b.user),
+    user2: (tasks) => tasks.sort((a, b) => a.user < b.user),
+  };
+  return allTypesSorting[typeSort](newSliceTasks);
+}
+
+
 filtering(tasks) {
   const {
     filterUser,
@@ -98,13 +124,13 @@ renderTasks() {
     idTasksToRemove,
   } = this.props;
 
-  const tasksBeforeFilters = this.filtering(tasks);
-
-  if (tasksBeforeFilters.length === 0) {
+  const tasksAfterFilters = this.filtering(tasks);
+  if (tasksAfterFilters.length === 0) {
     return null;
   }
 
-  const currentChannelTasks = tasksBeforeFilters.filter((task) => task.channelId === channelId);
+  const tasksAfterSorting = this.sorting(tasksAfterFilters);
+  const currentChannelTasks = tasksAfterSorting.filter((task) => task.channelId === channelId);
   return (
     <div className="content-tasks container-fluid">
       {currentChannelTasks.map((task, i) => {
@@ -114,6 +140,7 @@ renderTasks() {
           'danger-them': idTasksToRemove.includes(task.id),
         });
         return (
+          // без onKeyUp ругается линтер
           <div onClick={this.showResetButton(task.id)} key={task.id} tabIndex={0} onKeyUp className={classDiv} role="button">
             <span className="item-numb">{task.number}</span>
             <span className="item-date">{task.date}</span>

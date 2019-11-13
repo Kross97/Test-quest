@@ -205,11 +205,21 @@ body {
 .sort-block{
   margin-top: 10px;
   margin-left: 112px;
+  height: 30px;
+}
+
+.sort-block:hover{
+  border: 1px solid #0000FF;
 }
 
 .sort-block-rating{
   margin-top: 10px;
   margin-left: 147px;
+  height: 30px;
+}
+
+.sort-block-rating:hover{
+  border: 1px solid #0000FF;
 }
 
 .sort-rating{
@@ -221,13 +231,23 @@ body {
 }
 
 .sort-block-number{
+  height: 30px;
   margin-top: 10px;
   margin-left: 55px;
+}
+
+.sort-block-number:hover{
+  border: 1px solid #0000FF;
 }
 
 .sort-block-user{
   margin-top: 10px;
   margin-left: 35px;
+  height: 30px;
+}
+
+.sort-block-user:hover{
+  border: 1px solid #0000FF;
 }
 
 .sort-text{

@@ -10,6 +10,9 @@ export const addIdCurrent = createAction('ADD_CURRENT_ID');
 export const addQuantityTasks = createAction('ADD_QUANTITY');
 
 export const resetTasks = createAction('RESET_TASKS');
+// sort sort
+
+export const addTypeSort = createAction('ADD_TYPE_SORT');
 
 // modify task content
 export const updateNumber = createAction('UPDATE_NUMBER');

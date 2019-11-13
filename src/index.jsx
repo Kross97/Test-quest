@@ -32,6 +32,7 @@ const store = configureStore({
       },
       text: '',
     },
+    typeSort: '',
   },
 });
 
