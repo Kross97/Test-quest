@@ -117,6 +117,8 @@ render() {
     text,
     rating,
   } = this.props;
+  console.log('RAT', typeof rating);
+  console.log('Numb', typeof number);
   const { notValid } = this.state;
   return (
     <div className="task-form">

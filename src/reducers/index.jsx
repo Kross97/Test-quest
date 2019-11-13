@@ -114,11 +114,11 @@ const contentTask = createReducer({
   [actions.updateText]: (state, action) => ({ ...state, text: action.payload.text }),
   [actions.updateRating]: (state, action) => ({ ...state, rating: action.payload.rating }),
   [actions.resetContent]: () => ({
-    number: 0,
+    number: '0',
     date: '',
     user: '',
     text: '',
-    rating: 0,
+    rating: '0',
   }),
 });
 

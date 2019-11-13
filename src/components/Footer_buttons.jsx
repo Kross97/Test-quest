@@ -48,8 +48,8 @@ renderstyleChannel(numb) {
 render() {
   return (
     <footer className="footer">
-      <div className="buttons-quantity">
-        <label>Количество строк на странице:</label>
+      <div className="buttons-quantity row no-gutters">
+        <p>Количество строк на странице:</p>
         <button onClick={this.changeQuantity(10)} type="button" className={this.renderstyleQuantity(10)}>10</button>
         <button onClick={this.changeQuantity(50)} type="button" className={this.renderstyleQuantity(50)}>50</button>
         <button onClick={this.changeQuantity(100)} type="button" className={this.renderstyleQuantity(100)}>100</button>
