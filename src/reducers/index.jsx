@@ -102,7 +102,7 @@ const tasks = createReducer({ allTasks: [], idTasksToRemove: [] }, {
 });
 
 const contentTask = createReducer({
-  number: '0',
+  number: '_',
   date: '',
   user: '',
   text: '',
@@ -114,7 +114,7 @@ const contentTask = createReducer({
   [actions.updateText]: (state, action) => ({ ...state, text: action.payload.text }),
   [actions.updateRating]: (state, action) => ({ ...state, rating: action.payload.rating }),
   [actions.resetContent]: () => ({
-    number: '0',
+    number: '_',
     date: '',
     user: '',
     text: '',

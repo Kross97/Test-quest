@@ -60,8 +60,8 @@ submitTask = (e) => {
     rating,
     addAlert,
   } = this.props;
-  if (number === '0' || valid.isEmpty(date) || valid.isEmpty(user)
-  || user === 'Все' || valid.isEmpty(text) || !valid.isInt(rating) || !valid.isInt(number)) {
+  const isValidForm = this.validator();
+  if (!isValidForm) {
     this.setState({ notValid: true });
   } else {
     const task = {
@@ -111,6 +111,30 @@ changeDataTask = (type) => ({ target }) => {
   }
 }
 
+validator() {
+  const {
+    number,
+    date,
+    user,
+    text,
+    rating,
+  } = this.props;
+  const allFormsValue = [number, date, user, text, rating];
+  const allValidators = {
+    [number]: (valueForm) => valueForm !== '_' && valid.isInt(valueForm) && valueForm.length <= 7,
+    [date]: (valueForm) => !valid.isEmpty(valueForm),
+    [user]: (valueForm) => !valid.isEmpty(valueForm) && valueForm !== 'Все',
+    [text]: (valueForm) => !valid.isEmpty(valueForm),
+    [rating]: (valueForm) => valid.isInt(valueForm),
+  };
+  const valueValidators = allFormsValue.map((val) => allValidators[val](val));
+  const result = valueValidators.filter((val) => val === false);
+  if (result.length === 0) {
+    return true;
+  }
+  return false;
+}
+
 renderUser() {
   const { user, users } = this.props;
   return (
@@ -148,13 +172,19 @@ renderUserDateText() {
   );
 }
 
-render() {
-  const {
-    closeForm,
-    number,
-    rating,
-  } = this.props;
+renderRating() {
+  const { rating } = this.props;
+  return (
+    <label htmlFor className="row no-gutters">
+     Рейтинг
+      <input className="input-rating" onChange={this.changeDataTask('rating')} name="rating" max="10" min="0" value={rating} type="number" />
+      <p>от 1 до 10</p>
+    </label>
+  );
+}
 
+render() {
+  const { closeForm, number } = this.props;
   const { notValid } = this.state;
   return (
     <div className="task-form">
@@ -169,11 +199,7 @@ render() {
           <p className="1">(не более 7 символов)</p>
         </label>
         {this.renderUserDateText()}
-        <label htmlFor className="row no-gutters">
-         Рейтинг
-          <input className="input-rating" onChange={this.changeDataTask('rating')} name="rating" max="10" min="0" value={rating} type="number" />
-          <p>от 1 до 10</p>
-        </label>
+        {this.renderRating()}
         <input onClick={this.resetTask} type="button" value="Удалить" className="button-delete" />
         <input onClick={this.submitTask} type="submit" value="Сохранить" className="btn-save" />
         <input onClick={closeForm} type="button" value="Отменить" className="btn-cancellation" />

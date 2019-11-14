@@ -15,7 +15,7 @@ const store = configureStore({
   preloadedState: {
     users: [{ fullName: 'Все' }],
     contentTask: {
-      number: '0',
+      number: '_',
       date: '',
       user: 'Все',
       text: '',
