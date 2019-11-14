@@ -392,15 +392,12 @@ background: #483D8B;
 color: white;
 }
 
-.buttons-quantity {
-  float: left;
-  margin-left: 50px;
-  color: #483D8B;
+.buttons-channel-first {
+  margin-left: 820px;
 }
-.buttons-channels {
-  float: left;
-  margin-left: 791px;
-  color: #483D8B;
+
+.buttons-quantity-channels{
+  margin-left: 30px;
 }
 
 /* list alerts*/

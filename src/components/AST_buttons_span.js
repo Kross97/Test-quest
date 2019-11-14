@@ -29,6 +29,10 @@ export const sortingSpans = [{
   text: 'Пользователь',
 }];
 
-export const buttonsQuantity = [{ value: 10, text: '10' }, { value: 50, text: '50' }, { value: 100, text: '100' }];
-
-export const buttonsChannels = [{ value: 1, text: '1' }, { value: 2, text: '2' }, { value: 3, text: '3' }, { value: 4, text: '4' }, { value: 5, text: '5' }, { value: 6, text: '6' }];
+export const buttonsQuantityAndChannels = [{ type: 'quantity', value: 10, text: '10' }, { type: 'quantity', value: 50, text: '50' }, { type: 'quantity', value: 100, text: '100' },
+  {
+    type: 'channel',
+    first: true,
+    value: 1,
+    text: '1',
+  }, { type: 'channel', value: 2, text: '2' }, { type: 'channel', value: 3, text: '3' }, { type: 'channel', value: 4, text: '4' }, { type: 'channel', value: 5, text: '5' }, { type: 'channel', value: 6, text: '6' }];

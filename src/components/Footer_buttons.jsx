@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import * as actions from '../actions';
-import { buttonsQuantity, buttonsChannels } from './AST_buttons_span';
+import { buttonsQuantityAndChannels } from './AST_buttons_span';
 
 const mapProps = ({ dataChannel }) => {
   const props = {
@@ -18,6 +18,19 @@ const allActions = {
 };
 
 class FooterButtons extends React.Component {
+changeValueButton = (value, type) => () => {
+  const { addIdCurrent, addQuantityTasks } = this.props;
+  switch (type) {
+    case 'channel':
+      addIdCurrent({ id: value });
+      break;
+    case 'quantity':
+      addQuantityTasks({ quantity: value });
+      break;
+    default:
+  }
+}
+
 changeChannel = (id) => () => {
   const { addIdCurrent } = this.props;
   addIdCurrent({ id });
@@ -32,25 +45,17 @@ render() {
   const { currentId, quantityTasks } = this.props;
   return (
     <footer className="footer">
-      <div className="buttons-quantity row no-gutters">
+      <div className="buttons-quantity-channels row no-gutters">
         <p>Количество строк на странице:</p>
-        {buttonsQuantity.map((btn) => {
+        {buttonsQuantityAndChannels.map((btn) => {
           const styleClass = cn({
-            'btn-quantity': true,
+            'btn-quantity': btn.type === 'quantity',
+            'btn-channel': btn.type === 'channel',
             'quantity-click': quantityTasks === btn.value,
-          });
-          return <button key={btn.value} onClick={this.changeQuantity(btn.value)} type="button" className={styleClass}>{btn.text}</button>;
-        })}
-      </div>
-
-
-      <div className="buttons-channels">
-        {buttonsChannels.map((btn) => {
-          const styleClass = cn({
-            'btn-channel': true,
             'channel-click': currentId === btn.value,
+            'buttons-channel-first': btn.first,
           });
-          return <button key={btn.value} onClick={this.changeChannel(btn.value)} type="button" className={styleClass}>{btn.text}</button>;
+          return <button key={btn.value} onClick={this.changeValueButton(btn.value, btn.type)} type="button" className={styleClass}>{btn.text}</button>;
         })}
       </div>
     </footer>
