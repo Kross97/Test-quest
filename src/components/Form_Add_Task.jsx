@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import valid from 'validator';
 import * as actions from '../actions';
+import Select from './Select_Users';
 
 const AlertErorValid = () => (
   <div className="eror-form alert alert-danger" role="alert">
@@ -135,25 +136,8 @@ validator() {
   return false;
 }
 
-renderUser() {
-  const { user, users } = this.props;
-  return (
-    <label htmlFor className="row no-gutters">
-  Пользователь
-      <p className="red-star">*</p>
-      <select className="style-input input-user" onChange={this.changeDataTask('user')} name="user" value={user}>
-        {users.map((us) => (
-          <option key={us.fullName}>
-            {us.fullName}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
 renderUserDateText() {
-  const { date, text } = this.props;
+  const { date, text, users } = this.props;
   return (
     <>
       <label htmlFor className="row no-gutters">
@@ -162,7 +146,7 @@ renderUserDateText() {
         <input className="style-input input-data" onChange={this.changeDataTask('date')} name="date" value={date} type="date" from="data" />
         <img src="../images/data.png" alt="data" width="35" height="35" />
       </label>
-      {this.renderUser()}
+      <Select users={users} onChange={this.changeDataTask('user')} type="formTask" />
       <label htmlFor className="row no-gutters">
     Текст
         <p className="red-star">*</p>

@@ -7,6 +7,7 @@ import ModalAddUser from './Modal_Add_User';
 import ContentTasks from './Content';
 import FooterButtons from './Footer_buttons';
 import NavigationSort from './Navigation_For_Sorting';
+import Select from './Select_Users';
 
 const mapProps = ({ users, filters }) => {
   const { before, after } = filters.date;
@@ -78,6 +79,7 @@ changeTextSearch = ({ target }) => {
 "exceptMethods": ["homepage","renderUser"] }] */
 
 homepage() {
+  const { users } = this.props;
   const { textSearch } = this.state;
   return (
     <div className="greate-container">
@@ -85,7 +87,9 @@ homepage() {
         <Button onClick={this.showFormsTaskAndModal('form')} className="styleButtonAdd" type="button">Добавить задачу</Button>
         <Button onClick={this.showFormsTaskAndModal('modal')} className="styleButtonAdd" type="button">Добавить пользователя</Button>
         <form>
-          {this.renderUser()}
+          <div className="block-user">
+            <Select users={users} onChange={this.changeDataFilter('user')} type="mainMenu" />
+          </div>
           {this.renderDate()}
           <div className="block-search">
             <button onClick={this.changeDataFilter('text')} type="button" className="img-search">
@@ -114,24 +118,6 @@ renderDate() {
           <img src="../images/data2.png" alt="data" width="35" height="35" />
         </label>
       ))}
-    </div>
-  );
-}
-
-renderUser() {
-  const { users } = this.props;
-  return (
-    <div className="block-user">
-      <label htmlFor className="labelUser">
-       Пользователь
-        <select onChange={this.changeDataFilter('user')} className="selectUser">
-          {users.map((us) => (
-            <option key={us.fullName}>
-              {us.fullName}
-            </option>
-          ))}
-        </select>
-      </label>
     </div>
   );
 }

@@ -148,13 +148,13 @@ body {
   margin-top: 40px;
 }
 
-.labelUser {
+.label-user {
   margin-left: 90px;
   margin-right: 10px;
   color: white;
 }
 
-.selectUser {
+.select-user {
   width: 190px;
   height: 43px;
   border-radius: 5px;

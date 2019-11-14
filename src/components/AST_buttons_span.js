@@ -36,3 +36,5 @@ export const buttonsQuantityAndChannels = [{ type: 'quantity', value: 10, text: 
     value: 1,
     text: '1',
   }, { type: 'channel', value: 2, text: '2' }, { type: 'channel', value: 3, text: '3' }, { type: 'channel', value: 4, text: '4' }, { type: 'channel', value: 5, text: '5' }, { type: 'channel', value: 6, text: '6' }];
+
+export const inputsModalAddUser = [{ type: 'name', placeholder: 'Enter your name' }, { type: 'lastName', placeholder: 'Enter last name' }];

@@ -9,6 +9,7 @@ import valid from 'validator';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { inputsModalAddUser } from './AST_buttons_span';
 
 const AlertEror = () => (
   <div className="alert alert-danger" role="alert">
@@ -46,12 +47,16 @@ submitUser = (e) => {
   }
 }
 
-changeName = ({ target }) => {
-  this.setState({ name: target.value });
-}
-
-changeLastName = ({ target }) => {
-  this.setState({ lastName: target.value });
+changeNameOrLastName = (type) => ({ target }) => {
+  switch (type) {
+    case 'name':
+      this.setState({ name: target.value });
+      break;
+    case 'lastName':
+      this.setState({ lastName: target.value });
+      break;
+    default:
+  }
 }
 
 render() {
@@ -63,12 +68,11 @@ render() {
         <Modal.Title>Добавление нового пользователя</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <InputGroup className="mb-3">
-          <FormControl onChange={this.changeName} placeholder="Enter your name" aria-label="Username" aria-describedby="basic-addon1" />
-        </InputGroup>
-        <InputGroup className="mb-3">
-          <FormControl onChange={this.changeLastName} placeholder="enter last name" aria-label="Username" aria-describedby="basic-addon1" />
-        </InputGroup>
+        {inputsModalAddUser.map((input) => (
+          <InputGroup key={input.type} className="mb-3">
+            <FormControl onChange={this.changeNameOrLastName(input.type)} placeholder={input.placeholder} aria-label="Username" aria-describedby="basic-addon1" />
+          </InputGroup>
+        ))}
         { notValid && <AlertEror /> }
       </Modal.Body>
       <Modal.Footer>
