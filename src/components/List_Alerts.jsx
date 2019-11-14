@@ -24,7 +24,7 @@ cleanList = () => {
 render() {
   const { listAlerts } = this.props;
 
-  setTimeout(this.cleanList, 20000);
+  // setTimeout(this.cleanList, 20000);
   return (
     <div className="list-alerts list-group">
       {listAlerts.map((alert) => {

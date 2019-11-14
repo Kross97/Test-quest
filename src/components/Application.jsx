@@ -32,83 +32,63 @@ class HomePage extends React.Component {
     this.state = { showForm: false, showModal: false, textSearch: '' };
   }
 
-showFormTask = () => {
-  const { showForm } = this.state;
-  this.setState({ showForm: !showForm });
+showFormsTaskAndModal = (type) => () => {
+  const { showForm, showModal } = this.state;
+  switch (type) {
+    case 'form':
+      this.setState({ showForm: !showForm });
+      break;
+    case 'modal':
+      this.setState({ showModal: !showModal });
+      break;
+    default:
+  }
 }
 
-showModalAddUser = () => {
-  const { showModal } = this.state;
-  this.setState({ showModal: !showModal });
-}
-
-changeFilterUser = ({ target }) => {
-  const { addFilterUser } = this.props;
-  addFilterUser({ user: target.value });
-}
-
-dateFilterBefore = ({ target }) => {
-  const { addFilterDateBefore } = this.props;
-  addFilterDateBefore({ before: target.value });
-}
-
-dateFilterAfter = ({ target }) => {
-  const { addFilterDateAfter } = this.props;
-  addFilterDateAfter({ after: target.value });
+changeDataFilter = (type) => ({ target }) => {
+  const { textSearch } = this.state;
+  const {
+    addFilterUser,
+    addFilterDateBefore,
+    addFilterDateAfter,
+    addFilterText,
+  } = this.props;
+  switch (type) {
+    case 'user':
+      addFilterUser({ user: target.value });
+      break;
+    case 'before':
+      addFilterDateBefore({ before: target.value });
+      break;
+    case 'after':
+      addFilterDateAfter({ after: target.value });
+      break;
+    case 'text':
+      addFilterText({ text: textSearch });
+      break;
+    default:
+  }
 }
 
 changeTextSearch = ({ target }) => {
   this.setState({ textSearch: target.value });
 }
 
-changeFilterText = (e) => {
-  e.preventDefault();
-  const { addFilterText } = this.props;
-  const { textSearch } = this.state;
-  addFilterText({ text: textSearch });
-}
-
 /* eslint class-methods-use-this: ["error", {
-"exceptMethods": ["homepage"] }] */
+"exceptMethods": ["homepage","renderUser"] }] */
+
 homepage() {
-  const {
-    users,
-    before,
-    after,
-  } = this.props;
   const { textSearch } = this.state;
   return (
     <div className="greate-container">
       <div className="container-fluid row no-gutters header">
-        <Button onClick={this.showFormTask} className="styleButtonAdd" type="button">Добавить задачу</Button>
-        <Button onClick={this.showModalAddUser} className="styleButtonAdd" type="button">Добавить пользователя</Button>
+        <Button onClick={this.showFormsTaskAndModal('form')} className="styleButtonAdd" type="button">Добавить задачу</Button>
+        <Button onClick={this.showFormsTaskAndModal('modal')} className="styleButtonAdd" type="button">Добавить пользователя</Button>
         <form>
-          <div className="block-user">
-            <label htmlFor className="labelUser">
-             Пользователь
-              <select onChange={this.changeFilterUser} className="selectUser">
-                {users.map((us) => (
-                  <option key={us.fullName}>
-                    {us.fullName}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="search-data">
-            <label htmlFor>
-            от
-              <input onChange={this.dateFilterBefore} type="date" value={before} className="styleInputDate" />
-              <img src="../images/data2.png" alt="data" width="35" height="35" />
-            </label>
-            <label htmlFor>
-              до
-              <input onChange={this.dateFilterAfter} type="date" value={after} className="styleInputDate" />
-              <img src="../images/data2.png" alt="data" width="35" height="35" />
-            </label>
-          </div>
+          {this.renderUser()}
+          {this.renderDate()}
           <div className="block-search">
-            <button onClick={this.changeFilterText} type="button" className="img-search">
+            <button onClick={this.changeDataFilter('text')} type="button" className="img-search">
               <img src="../images/search.png" width="35" height="35" alt="search" />
             </button>
             <input onChange={this.changeTextSearch} className="styleInputSearch" type="name" value={textSearch} placeholder="поиск по тексту" />
@@ -122,12 +102,46 @@ homepage() {
   );
 }
 
+renderDate() {
+  const { before, after } = this.props;
+  const labelsDateFilters = [{ type: 'before', text: 'от' }, { type: 'after', text: 'до' }];
+  return (
+    <div className="search-data">
+      {labelsDateFilters.map((label) => (
+        <label key={label.type} htmlFor>
+          {label.text}
+          <input onChange={this.changeDataFilter(`${label.type}`)} type="date" value={label.type === 'before' ? before : after} className="styleInputDate" />
+          <img src="../images/data2.png" alt="data" width="35" height="35" />
+        </label>
+      ))}
+    </div>
+  );
+}
+
+renderUser() {
+  const { users } = this.props;
+  return (
+    <div className="block-user">
+      <label htmlFor className="labelUser">
+       Пользователь
+        <select onChange={this.changeDataFilter('user')} className="selectUser">
+          {users.map((us) => (
+            <option key={us.fullName}>
+              {us.fullName}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
 render() {
   const { showModal, showForm } = this.state;
   return (
     <div>
-      <ModalAddUser show={showModal} handleClose={this.showModalAddUser} />
-      { showForm ? <FormAddTask closeForm={this.showFormTask} /> : this.homepage() }
+      <ModalAddUser show={showModal} handleClose={this.showFormsTaskAndModal('modal')} />
+      { showForm ? <FormAddTask closeForm={this.showFormsTaskAndModal('form')} /> : this.homepage() }
     </div>
   );
 }

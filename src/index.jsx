@@ -7,6 +7,7 @@ import { configureStore } from 'redux-starter-kit';
 import reducer from './reducers';
 import Application from './components/Application';
 
+
 const store = configureStore({
   reducer,
   // eslint-disable-next-line no-underscore-dangle

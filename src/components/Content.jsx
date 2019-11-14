@@ -96,51 +96,38 @@ filtering(tasks) {
     filterDateAfter,
   } = this.props;
 
-  let filteringTasks = tasks;
-  if (filterUser !== 'Все') {
-    filteringTasks = filteringTasks.filter((task) => task.user === filterUser);
-  }
-  if (filterText !== '') {
-    filteringTasks = filteringTasks.filter((task) => task.text.includes(filterText));
-  }
-  if (filterDateBefore !== '') {
-    filteringTasks = filteringTasks.filter((task) => (
+  const validFilters = [filterUser, filterText, filterDateBefore, filterDateAfter].filter((filter) => filter !== '' && filter !== 'Все');
+  const allFilter = {
+    [filterUser]: (allTasks) => allTasks.filter((task) => task.user === filterUser),
+    [filterText]: (allTasks) => allTasks.filter((task) => task.text.includes(filterText)),
+    [filterDateBefore]: (allTasks) => allTasks.filter((task) => (
       Date.parse(task.date) >= Date.parse(filterDateBefore)
-    ));
-  }
-  if (filterDateAfter !== '') {
-    filteringTasks = filteringTasks.filter((task) => (
+    )),
+    [filterDateAfter]: (allTasks) => allTasks.filter((task) => (
       Date.parse(task.date) <= Date.parse(filterDateAfter)
-    ));
+    )),
+  };
+
+  let filteringTasks = tasks;
+  if (validFilters.length !== 0) {
+    // eslint-disable-next-line no-return-assign
+    validFilters.map((filter) => filteringTasks = allFilter[filter](filteringTasks));
   }
   return filteringTasks;
 }
 
-renderTasks() {
-  const {
-    tasks,
-    channelId,
-    quantityTasks,
-    idTasksToRemove,
-  } = this.props;
-
-  const tasksAfterFilters = this.filtering(tasks);
-  if (tasksAfterFilters.length === 0) {
-    return null;
-  }
-
-  const tasksAfterSorting = this.sorting(tasksAfterFilters);
-  const currentChannelTasks = tasksAfterSorting.filter((task) => task.channelId === channelId);
+renderTasksList(channelTasks) {
+  const { quantityTasks, idTasksToRemove } = this.props;
   return (
-    <div className="content-tasks container-fluid">
-      {currentChannelTasks.map((task, i) => {
+    <>
+      {channelTasks.map((task, i) => {
         if (i >= quantityTasks) { return null; }
         const classDiv = cn({
           'task-item': true,
           'danger-them': idTasksToRemove.includes(task.id),
         });
         return (
-          // без onKeyUp ругается линтер
+        // без onKeyUp ругается линтер
           <div onClick={this.showResetButton(task.id)} key={task.id} tabIndex={0} onKeyUp className={classDiv} role="button">
             <span className="item-numb">{task.number}</span>
             <span className="item-date">{task.date}</span>
@@ -150,6 +137,22 @@ renderTasks() {
           </div>
         );
       })}
+    </>
+  );
+}
+
+renderAndProcessedTasks() {
+  const { tasks, channelId } = this.props;
+  const tasksAfterFilters = this.filtering(tasks);
+  console.log(tasksAfterFilters);
+  if (tasksAfterFilters.length === 0) {
+    return null;
+  }
+  const tasksAfterSorting = this.sorting(tasksAfterFilters);
+  const currentChannelTasks = tasksAfterSorting.filter((task) => task.channelId === channelId);
+  return (
+    <div className="content-tasks container-fluid">
+      {this.renderTasksList(currentChannelTasks)}
     </div>
   );
 }
@@ -162,7 +165,7 @@ render() {
   } = this.props;
   return (
     <div className="container-tasks-and-button">
-      {tasks.length !== 0 && this.renderTasks()}
+      {tasks.length !== 0 && this.renderAndProcessedTasks()}
       {listAlerts.length !== 0 && <ListAlerts />}
       { idTasksToRemove.length !== 0 && <ButtonDelete deleteTasks={this.resetChekedTasks} /> }
     </div>

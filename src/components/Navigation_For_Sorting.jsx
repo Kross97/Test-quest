@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { sortingSpans } from './AST_buttons_span';
 
 const mapProps = ({ typeSort }) => ({ typeSort });
 
@@ -30,36 +31,14 @@ render() {
   return (
     // без onKeyPress ругается линтер
     <div className="container-fluid row no-gutters">
-      <span onClick={this.changeTypeSort('number')} onKeyPress tabIndex={0} role="button" className="sort-block-number">
-        <span className="sort-label">
-        Номер
+      {sortingSpans.map((span) => (
+        <span key={span.value} onClick={this.changeTypeSort(span.value)} onKeyPress tabIndex={0} role="button" className={span.blokStyle}>
+          <span className={span.labelStyle}>
+            {span.text}
+          </span>
+          <img src={`../images/${currentSort === span.value ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
         </span>
-        <img src={`../images/${currentSort === 'number' ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
-      </span>
-      <span onClick={this.changeTypeSort('data')} onKeyPress tabIndex={0} role="button" className="sort-block">
-        <span className="sort-label">
-            Создано
-        </span>
-        <img src={`../images/${currentSort === 'data' ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
-      </span>
-      <span onClick={this.changeTypeSort('text')} onKeyPress tabIndex={0} role="button" className="sort-block">
-        <span className="sort-text">
-              Обьявление
-        </span>
-        <img src={`../images/${currentSort === 'text' ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
-      </span>
-      <span onClick={this.changeTypeSort('rating')} onKeyPress tabIndex={0} role="button" className="sort-block-rating">
-        <span className="sort-rating">
-                Рейтинг
-        </span>
-        <img src={`../images/${currentSort === 'rating' ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
-      </span>
-      <span onClick={this.changeTypeSort('user')} onKeyPress tabIndex={0} role="button" className="sort-block-user">
-        <span className="sort-label">
-                  Пользователь
-        </span>
-        <img src={`../images/${currentSort === 'user' ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
-      </span>
+      ))}
     </div>
   );
 }
