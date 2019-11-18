@@ -194,6 +194,13 @@ body {
 }
 /* spans sorting*/
 
+.btn-sorting{
+  background-color: #483D8B;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #483D8B;
+}
+
 .sort-label {
   display: inline-block;
   color: white;
@@ -208,18 +215,11 @@ body {
   height: 30px;
 }
 
-.sort-block:hover{
-  border: 1px solid #0000FF;
-}
 
 .sort-block-rating{
   margin-top: 10px;
   margin-left: 147px;
   height: 30px;
-}
-
-.sort-block-rating:hover{
-  border: 1px solid #0000FF;
 }
 
 .sort-rating{
@@ -236,18 +236,10 @@ body {
   margin-left: 55px;
 }
 
-.sort-block-number:hover{
-  border: 1px solid #0000FF;
-}
-
 .sort-block-user{
   margin-top: 10px;
   margin-left: 35px;
   height: 30px;
-}
-
-.sort-block-user:hover{
-  border: 1px solid #0000FF;
 }
 
 .sort-text{
@@ -298,6 +290,14 @@ body {
   margin-left: 85px;
 }
 
+.style-input-lastName {
+  height: 35px;
+  width: 150px;
+  border: 1px solid #483D8B;
+  border-radius: 5px;
+  margin-left: 50px;
+}
+
 .input-data{
   margin-left: 74px;
 }
@@ -335,6 +335,7 @@ body {
   font-size: 22px;
 }
 
+/* form task*/
 .btn-save{
   width: 160px;
   height: 40px;
@@ -345,6 +346,18 @@ body {
   color:#483D8B ;
   font-size: 22px;
 }
+
+.btn-save-disable{
+  width: 160px;
+  height: 40px;
+  margin-left: 600px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background:  white;
+  color:red ;
+  font-size: 22px;
+}
+
 
 .btn-cancellation{
   width: 160px;
@@ -359,6 +372,27 @@ body {
 
 .eror-form{
   width: 550px;
+}
+/* form add user*/
+
+.btn-save-disable-user{
+  width: 160px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 20px;
+  background:  white;
+  color:red ;
+  font-size: 22px;
+}
+
+.btn-save-user{
+  width: 160px;
+  height: 40px;
+  border: 1px solid #483D8B;
+  border-radius: 20px;
+  background:  white;
+  color:#483D8B ;
+  font-size: 22px;
 }
 /* footer */
 

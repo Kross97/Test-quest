@@ -71,18 +71,17 @@ sorting(tasksAfterFilters) {
   }
 
   const newSliceTasks = tasksAfterFilters.slice(0);
-
   const allTypesSorting = {
-    number: (tasks) => tasks.sort((a, b) => Number(a.number) - Number(b.number)),
-    number2: (tasks) => tasks.sort((a, b) => Number(b.number) - Number(a.number)),
-    data: (tasks) => tasks.sort((a, b) => Date.parse(a.date) - Date.parse(b.date)),
-    data2: (tasks) => tasks.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)),
-    text: (tasks) => tasks.sort((a, b) => a.text > b.text),
-    text2: (tasks) => tasks.sort((a, b) => a.text < b.text),
-    rating: (tasks) => tasks.sort((a, b) => Number(a.rating) - Number(b.rating)),
-    rating2: (tasks) => tasks.sort((a, b) => Number(b.rating) - Number(a.rating)),
-    user: (tasks) => tasks.sort((a, b) => a.user > b.user),
-    user2: (tasks) => tasks.sort((a, b) => a.user < b.user),
+    numberAscending: (tasks) => tasks.sort((a, b) => Number(a.number) - Number(b.number)),
+    numberDesc: (tasks) => tasks.sort((a, b) => Number(b.number) - Number(a.number)),
+    dataAscending: (tasks) => tasks.sort((a, b) => Date.parse(a.date) - Date.parse(b.date)),
+    dataDesc: (tasks) => tasks.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)),
+    textAscending: (tasks) => tasks.sort((a, b) => a.text > b.text),
+    textDesc: (tasks) => tasks.sort((a, b) => a.text < b.text),
+    ratingAscending: (tasks) => tasks.sort((a, b) => Number(a.rating) - Number(b.rating)),
+    ratingDesc: (tasks) => tasks.sort((a, b) => Number(b.rating) - Number(a.rating)),
+    userAscending: (tasks) => tasks.sort((a, b) => a.user > b.user),
+    userDesc: (tasks) => tasks.sort((a, b) => a.user < b.user),
   };
   return allTypesSorting[typeSort](newSliceTasks);
 }
@@ -127,14 +126,13 @@ renderTasksList(channelTasks) {
           'danger-them': idTasksToRemove.includes(task.id),
         });
         return (
-        // без onKeyUp ругается линтер
-          <div onClick={this.showResetButton(task.id)} key={task.id} tabIndex={0} onKeyUp className={classDiv} role="button">
+          <button type="button" onClick={this.showResetButton(task.id)} key={task.id} className={classDiv}>
             <span className="item-numb">{task.number}</span>
             <span className="item-date">{task.date}</span>
             <span className="item-text">{task.text}</span>
             <span className="item-rating">{task.rating}</span>
             <span className="item-user">{task.user}</span>
-          </div>
+          </button>
         );
       })}
     </>
@@ -144,12 +142,11 @@ renderTasksList(channelTasks) {
 renderAndProcessedTasks() {
   const { tasks, channelId } = this.props;
   const tasksAfterFilters = this.filtering(tasks);
-  console.log(tasksAfterFilters);
   if (tasksAfterFilters.length === 0) {
     return null;
   }
   const tasksAfterSorting = this.sorting(tasksAfterFilters);
-  const currentChannelTasks = tasksAfterSorting.filter((task) => task.channelId === channelId);
+  const currentChannelTasks = tasksAfterSorting.filter((task) => task.currentId === channelId);
   return (
     <div className="content-tasks container-fluid">
       {this.renderTasksList(currentChannelTasks)}
@@ -158,11 +155,7 @@ renderAndProcessedTasks() {
 }
 
 render() {
-  const {
-    tasks,
-    listAlerts,
-    idTasksToRemove,
-  } = this.props;
+  const { tasks, listAlerts, idTasksToRemove } = this.props;
   return (
     <div className="container-tasks-and-button">
       {tasks.length !== 0 && this.renderAndProcessedTasks()}

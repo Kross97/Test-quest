@@ -2,124 +2,102 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import valid from 'validator';
+import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import Select from './Select_Users';
 
-const AlertErorValid = () => (
-  <div className="eror-form alert alert-danger" role="alert">
-      Не заполненны обязательные поля! Введите данные!
-  </div>
-);
-
-const mapProps = ({ contentTask, users, dataChannel }) => {
-  const props = {
-    users,
-    number: contentTask.number,
-    date: contentTask.date,
-    user: contentTask.user,
-    text: contentTask.text,
-    rating: contentTask.rating,
-    channelId: dataChannel.currentId,
-  };
+const mapProps = ({ users, dataChannel }) => {
+  const { currentId } = dataChannel;
+  const props = { users, currentId };
   return props;
 };
 
 
 const allActions = {
   addTask: actions.addTask,
-  updateNumber: actions.updateNumber,
-  updateDate: actions.updateDate,
-  updateUser: actions.updateUser,
-  updateText: actions.updateText,
-  updateRating: actions.updateRating,
-  resetContent: actions.resetContent,
   addAlert: actions.addAlert,
 };
 
 class FormAddTask extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { notValid: false };
+    this.state = {
+      notValid: true,
+      number: '0',
+      date: '',
+      user: 'Все',
+      text: '',
+      rating: '0',
+    };
   }
 
   resetTask = () => {
-    const { resetContent } = this.props;
-    resetContent();
+    this.setState({
+      number: '0',
+      date: '',
+      user: 'Все',
+      text: '',
+      rating: '0',
+    });
   }
 
 submitTask = (e) => {
   e.preventDefault();
+  const { addTask, currentId, addAlert } = this.props;
   const {
-    addTask,
-    closeForm,
-    resetContent,
     number,
-    channelId,
     date,
     user,
     text,
     rating,
-    addAlert,
-  } = this.props;
-  const isValidForm = this.validator();
-  if (!isValidForm) {
-    this.setState({ notValid: true });
-  } else {
-    const task = {
-      id: _.uniqueId(),
-      channelId,
-      number,
-      date,
-      user,
-      text,
-      rating,
-    };
-    addTask({ task });
-    const alert = { id: _.uniqueId(), type: 'add_task', message: 'Задача успешно создана!' };
-    addAlert({ alert });
-    resetContent();
-    this.setState({ notValid: false });
-    closeForm();
-  }
+  } = this.state;
+  const task = {
+    id: _.uniqueId(),
+    currentId,
+    number,
+    date,
+    user,
+    text,
+    rating,
+  };
+  addTask({ task });
+  const alert = { id: _.uniqueId(), type: 'add_task', message: 'Задача успешно создана!' };
+  addAlert({ alert });
+  this.resetTask();
+  this.setState({ notValid: true });
 };
 
 changeDataTask = (type) => ({ target }) => {
-  const {
-    updateNumber,
-    updateDate,
-    updateUser,
-    updateText,
-    updateRating,
-  } = this.props;
   switch (type) {
     case 'number':
-      updateNumber({ [type]: target.value });
+      this.setState({ number: target.value });
       break;
     case 'date':
-      updateDate({ [type]: target.value });
+      this.setState({ date: target.value });
       break;
     case 'user':
-      updateUser({ [type]: target.value });
+      this.setState({ user: target.value });
       break;
     case 'text':
-      updateText({ [type]: target.value });
+      this.setState({ text: target.value });
       break;
     case 'rating':
-      updateRating({ [type]: target.value });
+      this.setState({ rating: target.value });
       break;
     default:
-      console.log('privet!');
   }
 }
 
-validator() {
+/* eslint class-methods-use-this: ["error", {
+"exceptMethods": ["validator"] }] */
+validator(state) {
   const {
     number,
     date,
     user,
     text,
     rating,
-  } = this.props;
+  } = state;
   const allFormsValue = [number, date, user, text, rating];
   const allValidators = {
     [number]: (valueForm) => valueForm !== '_' && valid.isInt(valueForm) && valueForm.length <= 7,
@@ -131,13 +109,14 @@ validator() {
   const valueValidators = allFormsValue.map((val) => allValidators[val](val));
   const result = valueValidators.filter((val) => val === false);
   if (result.length === 0) {
-    return true;
+    return false;
   }
-  return false;
+  return true;
 }
 
 renderUserDateText() {
-  const { date, text, users } = this.props;
+  const { date, text, user } = this.state;
+  const { users } = this.props;
   return (
     <>
       <label htmlFor className="row no-gutters">
@@ -146,7 +125,7 @@ renderUserDateText() {
         <input className="style-input input-data" onChange={this.changeDataTask('date')} name="date" value={date} type="date" from="data" />
         <img src="../images/data.png" alt="data" width="35" height="35" />
       </label>
-      <Select users={users} onChange={this.changeDataTask('user')} type="formTask" />
+      <Select users={users} onChange={this.changeDataTask('user')} type="formTask" user={user} />
       <label htmlFor className="row no-gutters">
     Текст
         <p className="red-star">*</p>
@@ -157,7 +136,7 @@ renderUserDateText() {
 }
 
 renderRating() {
-  const { rating } = this.props;
+  const { rating } = this.state;
   return (
     <label htmlFor className="row no-gutters">
      Рейтинг
@@ -168,15 +147,14 @@ renderRating() {
 }
 
 render() {
-  const { closeForm, number } = this.props;
-  const { notValid } = this.state;
+  const { number } = this.state;
   return (
     <div className="task-form">
       <h2 className="font-ad">
-        <font>Объявление</font>
+        <p>Объявление</p>
       </h2>
       <form onSubmit={this.submitTask}>
-        <label htmlFor className="row no-gutters label-input">
+        <label htmlFor className="row no-gutters">
           Номер
           <p className="red-star">*</p>
           <input className="style-input not-arrow" onChange={this.changeDataTask('number')} name="number" value={number} min="0" type="number" />
@@ -185,9 +163,8 @@ render() {
         {this.renderUserDateText()}
         {this.renderRating()}
         <input onClick={this.resetTask} type="button" value="Удалить" className="button-delete" />
-        <input onClick={this.submitTask} type="submit" value="Сохранить" className="btn-save" />
-        <input onClick={closeForm} type="button" value="Отменить" className="btn-cancellation" />
-        {notValid && <AlertErorValid />}
+        <button type="submit" disabled={this.validator(this.state)} className={this.validator(this.state) ? 'btn-save-disable' : 'btn-save'}>Сохранить</button>
+        <Link to="/"><input type="button" value="Отменить" className="btn-cancellation" /></Link>
       </form>
     </div>
   );

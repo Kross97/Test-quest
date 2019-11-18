@@ -101,31 +101,9 @@ const tasks = createReducer({ allTasks: [], idTasksToRemove: [] }, {
   },
 });
 
-const contentTask = createReducer({
-  number: '_',
-  date: '',
-  user: '',
-  text: '',
-  rating: '0',
-}, {
-  [actions.updateNumber]: (state, action) => ({ ...state, number: action.payload.number }),
-  [actions.updateDate]: (state, action) => ({ ...state, date: action.payload.date }),
-  [actions.updateUser]: (state, action) => ({ ...state, user: action.payload.user }),
-  [actions.updateText]: (state, action) => ({ ...state, text: action.payload.text }),
-  [actions.updateRating]: (state, action) => ({ ...state, rating: action.payload.rating }),
-  [actions.resetContent]: () => ({
-    number: '_',
-    date: '',
-    user: '',
-    text: '',
-    rating: '0',
-  }),
-});
-
 export default combineReducers({
   users,
   tasks,
-  contentTask,
   dataChannel,
   filters,
   typeSort,

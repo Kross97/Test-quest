@@ -1,29 +1,44 @@
 export const sortingSpans = [{
-  value: 'number',
+  value: {
+    asc: 'numberAscending',
+    desc: 'numberDesc',
+  },
   blokStyle: 'sort-block-number',
   labelStyle: 'sort-label',
   text: 'Номер',
 },
 {
-  value: 'data',
+  value: {
+    asc: 'dataAscending',
+    desc: 'dataDesc',
+  },
   blokStyle: 'sort-block',
   labelStyle: 'sort-label',
   text: 'Создано',
 },
 {
-  value: 'text',
+  value: {
+    asc: 'textAscending',
+    desc: 'textDesc',
+  },
   blokStyle: 'sort-block',
   labelStyle: 'sort-text',
   text: 'Обьявление',
 },
 {
-  value: 'rating',
+  value: {
+    asc: 'ratingAscending',
+    desc: 'ratingDesc',
+  },
   blokStyle: 'sort-block-rating',
   labelStyle: 'sort-rating',
   text: 'Рейтинг',
 },
 {
-  value: 'user',
+  value: {
+    asc: 'userAscending',
+    desc: 'userDesc',
+  },
   blokStyle: 'sort-block-user',
   labelStyle: 'sort-label',
   text: 'Пользователь',

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { sortingSpans } from './AST_buttons_span';
+import { imageSortAsc, imageSortDesc } from './images_path';
 
 const mapProps = ({ typeSort }) => ({ typeSort });
 
@@ -15,28 +16,29 @@ class NavigationSort extends React.Component {
     this.state = { currentSort: '' };
   }
 
-changeTypeSort = (type) => () => {
+changeTypeSort = (valueSort) => () => {
   const { addTypeSort, typeSort } = this.props;
-  if (type === typeSort) {
-    addTypeSort({ type: `${type}2` });
+  if (valueSort.asc === typeSort) {
+    addTypeSort({ type: valueSort.desc });
     this.setState({ currentSort: '' });
   } else {
-    addTypeSort({ type });
-    this.setState({ currentSort: type });
+    addTypeSort({ type: valueSort.asc });
+    this.setState({ currentSort: valueSort.asc });
   }
 }
 
 render() {
   const { currentSort } = this.state;
   return (
-    // без onKeyPress ругается линтер
     <div className="container-fluid row no-gutters">
       {sortingSpans.map((span) => (
-        <span key={span.value} onClick={this.changeTypeSort(span.value)} onKeyPress tabIndex={0} role="button" className={span.blokStyle}>
+        <span key={span.value} role="button" className={span.blokStyle}>
           <span className={span.labelStyle}>
             {span.text}
           </span>
-          <img src={`../images/${currentSort === span.value ? 'sort2' : 'sort'}.png`} alt="sort" width="10" height="10" />
+          <button type="button" className="btn-sorting" onClick={this.changeTypeSort(span.value)}>
+            <img src={currentSort === span.value.asc ? imageSortAsc : imageSortDesc} alt="sort" width="10" height="10" />
+          </button>
         </span>
       ))}
     </div>
