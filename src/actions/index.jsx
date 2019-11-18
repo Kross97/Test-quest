@@ -14,19 +14,6 @@ export const resetTasks = createAction('RESET_TASKS');
 
 export const addTypeSort = createAction('ADD_TYPE_SORT');
 
-// modify task content
-export const updateNumber = createAction('UPDATE_NUMBER');
-
-export const updateDate = createAction('UPDATE_DATE');
-
-export const updateUser = createAction('UPDATE_USER');
-
-export const updateText = createAction('UPDATE_TEXT');
-
-export const updateRating = createAction('UPDATE_RATING');
-
-export const resetContent = createAction('RESET_CONTENT');
-
 // add id to remove
 export const addIdTaskForRemove = createAction('ADD_ID_REMOVE');
 
